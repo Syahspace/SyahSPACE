@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CHIBIS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="css/CHIBIS.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <ul>
+      <li><a href="HOME.html">HOME</a></li>
+      <li><a href="SKETCHES.html">SKETCHES</a></li>
+      <li><a href="FULL-COLOUR.html">FULL-COLOUR</a></li>
+      <li><a href="RENDER.html">RENDER</a></li>
+      <li><a href="CHIBIS.html">CHIBIS</a></li>
+    </ul>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <img src="img/Banner.png"alt="Banner Image"/>
+    <h1>RENDER</h1>
+  </div>
+
+  <!-- CONTENT -->
+  <section class="grid-section">
+    <div class="render-box 1">
+      <div class="image-wrapper">
+  <img src="img/Claw machine (1).png" alt="Claw" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Claw Machine</h2>
+      <p>A drawing inspired by the claw machine game, because I've been watching videos of them a lot lately. I decided to make a fun little drawing based on the gameplay. </p>
+    </div>
+
+    <div class="render-box 2">
+ <div class="image-wrapper">
+  <img src="img/Bucchi chibi.png" alt="Bucchi" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Ruggie</h2>
+      <p>Simple chibi drawing of Ruggie Bucchi from Twisted Wonderland. He's actually based off the Hyenas from The Lion King!</p>
+    </div>
+
+    <div class="render-box">
+     <div class="image-wrapper">
+  <img src="img/Hajitori chibi (2).png" alt="Hajitori"/>
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Hajime & Tori</h2>
+      <p>A cute little chibi drawing of Hajime and Tori from Ensemble Stars. Since they're best friends, I thought that it would be cute to draw them together.</p>
+    </div>
+	  
+	  
+  </section>
+	
+	
+		  <footer>
+  <p>Contact me on:</p>
+  <div class="footer-buttons">
+    <a href="mailto:aisyah.norkhairul@gmail.com" target="_blank" class="footer-btn"> <img src="img/gmail logo 1.png"></a>
+    <a href="https://www.instagram.com/syah_ens" target="_blank" class="footer-btn"><img src="img/insta2.png" alt="insta"></a>
+  </div>
+</footer>
+	  
+	 
+	
+	
+
+<div class="popup-overlay" id="popup">
+  <span class="close-btn" onclick="closePopup()">&times;</span>
+  <img id="popup-img" src="" alt="Full Illustration">
+  
+  <!-- Arrows -->
+  <span class="nav-arrow left" onclick="prevImage()">&#10094;</span>
+  <span class="nav-arrow right" onclick="nextImage()">&#10095;</span>
+</div>
+	
+	<script>
+  // Fade-in on scroll
+  const boxes = document.querySelectorAll('.render-box');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  boxes.forEach(box => {
+    observer.observe(box);
+  });
+	</script>
+	
+  <script>
+  const images = Array.from(document.querySelectorAll('.image-wrapper img'));
+  let currentIndex = -1;
+
+  const popup = document.getElementById('popup');
+  const popupImg = document.getElementById('popup-img');
+
+  // Open popup and set current index
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      currentIndex = index;
+      popupImg.src = img.src;
+      popup.style.display = 'flex';
+    });
+  });
+
+ function nextImage() {
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+  } else {
+    currentIndex = 0;
+  }
+  changePopupImage('right');
+}
+
+function prevImage() {
+  if (currentIndex > 0) {
+    currentIndex--;
+  } else {
+    currentIndex = images.length - 1;
+  }
+  changePopupImage('left');
+}
+
+function changePopupImage(direction) {
+  popupImg.classList.remove('slide-in-left', 'slide-in-right');
+  void popupImg.offsetWidth; // forces reflow to restart animation
+
+  popupImg.src = images[currentIndex].src;
+
+  if (direction === 'right') {
+    popupImg.classList.add('slide-in-right');
+  } else {
+    popupImg.classList.add('slide-in-left');
+  }
+}
+
+  // Close popup
+  function closePopup() {
+    popup.style.display = 'none';
+    currentIndex = -1;
+  }
+
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) closePopup();
+  });
+
+  // Keyboard controls
+  document.addEventListener('keydown', (e) => {
+    if (popup.style.display === 'flex') {
+      if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      } else if (e.key === 'Escape') {
+        closePopup();
+      }
+    }
+  });
+</script>
+	
+	<script>
+  // Fade in on page load
+  document.body.classList.add('fade-in');
+
+  // Handle link clicks with fade-out
+  document.querySelectorAll('a[href]').forEach(link => {
+    const url = link.getAttribute('href');
+    if (!url.startsWith('#') && !url.startsWith('mailto:') && !url.startsWith('http')) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.classList.remove('fade-in');
+        document.body.classList.add('fade-out');
+
+        setTimeout(() => {
+          window.location = url;
+        }, 400); // Match fadeOut duration
+      });
+    }
+  });
+</script>
+
+	
+</body>
+</html>
+
