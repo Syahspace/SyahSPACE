@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RENDER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="css/RENDER.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <ul>
+      <li><a href="HOME.html">HOME</a></li>
+      <li><a href="SKETCHES.html">SKETCHES</a></li>
+      <li><a href="FULL-COLOUR.html">FULL-COLOUR</a></li>
+      <li><a href="RENDER.html">RENDER</a></li>
+      <li><a href="CHIBIS.html">CHIBIS</a></li>
+    </ul>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <img src="img/Banner.png" alt="Banner Image"/>
+    <h1>RENDER</h1>
+  </div>
+
+  <!-- CONTENT -->
+  <section class="grid-section">
+    <div class="render-box">
+      <div class="image-wrapper">
+  <img src="img/Don't feed the fish.png" alt="Don't Feed the Fish" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Don’t Feed the Fish</h2>
+      <p>This is one my most recent rendered drawing. It depicts a hungry mermaid staring at the viewer from behind an aquarium.</p>
+    </div>
+
+    <div class="render-box">
+ <div class="image-wrapper">
+  <img src="img/with ref2.png" alt="LIPSTICK" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>LIPSTICK</h2>
+      <p>This is a drawing that was based on a picture of a woman applying lipstick that I saw on google. One of my top drawings so far.</p>
+    </div>
+
+    <div class="render-box">
+     <div class="image-wrapper">
+  <img src="img/Venti 🩵 (4).png" alt="Breeze Under the Tree"/>
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Breeze Under the Tree</h2>
+      <p>An old render of Venti from Genshin Impact. He’s one of my favourite characters, and I really liked how this piece turned out at the time.</p>
+    </div>
+
+    <div class="render-box">
+      <div class="image-wrapper">
+  <img src="img/wip ritsu (1).png" alt="Rest"/>
+  <span class="hover-text">Click Me!</span>
+</div>
+      <h2>Rest</h2>
+      <p>A drawing I did for an art competition. Although I didn’t win, I think this drawing helped me branch out a bit from my usual art.</p>
+    </div>
+	 
+	  
+	  
+  </section>
+	
+	
+	
+		    <footer>
+  <p>Contact me on:</p>
+  <div class="footer-buttons">
+    <a href="mailto:aisyah.norkhairul@gmail.com" target="_blank" class="footer-btn"> <img src="img/gmail logo 1.png"></a>
+    <a href="https://www.instagram.com/syah_ens" target="_blank" class="footer-btn"><img src="img/insta2.png" alt="insta"></a>
+  </div>
+</footer>
+	 
+	
+	
+
+<div class="popup-overlay" id="popup">
+  <span class="close-btn" onclick="closePopup()">&times;</span>
+  <img id="popup-img" src="" alt="Full Illustration">
+  
+  <!-- Arrows -->
+  <span class="nav-arrow left" onclick="prevImage()">&#10094;</span>
+  <span class="nav-arrow right" onclick="nextImage()">&#10095;</span>
+</div>
+	
+	<script>
+  // Fade-in on scroll
+  const boxes = document.querySelectorAll('.render-box');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  boxes.forEach(box => {
+    observer.observe(box);
+  });
+	</script>
+	
+  <script>
+  const images = Array.from(document.querySelectorAll('.image-wrapper img'));
+  let currentIndex = -1;
+
+  const popup = document.getElementById('popup');
+  const popupImg = document.getElementById('popup-img');
+
+  // Open popup and set current index
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      currentIndex = index;
+      popupImg.src = img.src;
+      popup.style.display = 'flex';
+    });
+  });
+
+ function nextImage() {
+  if (currentIndex < images.length - 1) {
+    currentIndex++;
+  } else {
+    currentIndex = 0;
+  }
+  changePopupImage('right');
+}
+
+function prevImage() {
+  if (currentIndex > 0) {
+    currentIndex--;
+  } else {
+    currentIndex = images.length - 1;
+  }
+  changePopupImage('left');
+}
+
+function changePopupImage(direction) {
+  popupImg.classList.remove('slide-in-left', 'slide-in-right');
+  void popupImg.offsetWidth; // forces reflow to restart animation
+
+  popupImg.src = images[currentIndex].src;
+
+  if (direction === 'right') {
+    popupImg.classList.add('slide-in-right');
+  } else {
+    popupImg.classList.add('slide-in-left');
+  }
+}
+
+  // Close popup
+  function closePopup() {
+    popup.style.display = 'none';
+    currentIndex = -1;
+  }
+
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) closePopup();
+  });
+
+  // Keyboard controls
+  document.addEventListener('keydown', (e) => {
+    if (popup.style.display === 'flex') {
+      if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      } else if (e.key === 'Escape') {
+        closePopup();
+      }
+    }
+  });
+</script>
+	
+	<script>
+  // Fade in on page load
+  document.body.classList.add('fade-in');
+
+  // Handle link clicks with fade-out
+  document.querySelectorAll('a[href]').forEach(link => {
+    const url = link.getAttribute('href');
+    if (!url.startsWith('#') && !url.startsWith('mailto:') && !url.startsWith('http')) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.classList.remove('fade-in');
+        document.body.classList.add('fade-out');
+
+        setTimeout(() => {
+          window.location = url;
+        }, 400); // Match fadeOut duration
+      });
+    }
+  });
+</script>
+
+	
+</body>
+</html>

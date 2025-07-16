@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SKETCHES</title>
+	
+	
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	
+	<link href="css/SKETCHES.css" rel="stylesheet" type="text/css">
+	
+</head>
+
+<body>
+	
+	 <!-- NAVIGATION -->
+<nav>
+    <ul>
+      <li><a href="HOME.html">HOME</a></li>
+      <li><a href="SKETCHES.html">SKETCHES</a></li>
+      <li><a href="FULL-COLOUR.html">FULL-COLOUR</a></li>
+      <li><a href="RENDER.html">RENDER</a></li>
+      <li><a href="CHIBIS.html">CHIBIS</a></li>
+    </ul>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <img src="img/Banner.png">
+    <h1>SKETCHES</h1>
+  </div>
+
+  <!-- CONTENT -->
+  <section class="content-section">
+    <!-- Box 1 -->
+    <div class="box box1">
+        <div class="image-wrapper">
+  <img src="img/Niki hungry (1).png" alt="Image Placeholder" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <p>
+       This is a redraw sketches from an in-game illustrations of the game Ensemble Stars. I first drew this in 2023, and it features a character from one of my favourite unit, Crazy:B.
+     </p>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box box2">
+      <div class="image-wrapper">
+  <img src="img/Asahiro sketches.png" alt="Image Placeholder" />
+  <span class="hover-text">Click Me!</span>
+</div>
+      <p>
+A sketch of one of my original characters, Asahiro. He’s the main character of my personal comic. He has monochromatic vision, so it’s fitting to sketch him in black and white.
+      </p>
+    </div>
+
+    <!-- Box 3 -->
+    <div class="box box3">
+      <div class="image-wrapper">
+  <img src="img/Rinne doodle.png" alt="Image Placeholder" />
+  <span class="hover-text">Click Me!</span>
+</div>
+   
+		<p> A doodle of my favourite character, Rinne Amagi that I made back in 2022. I was still practicing drawing side-profile and thought that drawing him would be fun. </p>
+  
+    </div>
+	  
+	    <footer>
+  <p>Contact me on:</p>
+  <div class="footer-buttons">
+    <a href="mailto:aisyah.norkhairul@gmail.com" target="_blank" class="footer-btn"> <img src="img/gmail logo 1.png"></a>
+    <a href="https://www.instagram.com/syah_ens" target="_blank" class="footer-btn"><img src="img/insta2.png" alt="insta"></a>
+  </div>
+</footer>
+	  
+	  
+	</section>
+
+	<!-- Popup Overlay -->
+<div class="popup-overlay" id="popup">
+  <span class="close-btn" onclick="closePopup()">&times;</span>
+  <img id="popup-img" src="" alt="Full Illustration">
+</div>
+	
+	
+	<script>
+  const boxes = document.querySelectorAll('.box');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+        observer.unobserve(entry.target); // trigger only once
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  boxes.forEach(box => {
+    observer.observe(box);
+  });
+</script>
+	
+	<script>
+  // Open popup
+  document.querySelectorAll('.box img').forEach(img => {
+    img.addEventListener('click', function() {
+      const popup = document.getElementById('popup');
+      const popupImg = document.getElementById('popup-img');
+      popupImg.src = this.src;
+      popup.style.display = 'flex';
+    });
+  });
+
+  // Close popup
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  // Optional: Close on outside click
+  document.getElementById('popup').addEventListener('click', function(e) {
+    if (e.target === this) closePopup();
+  });
+</script>
+	
+	<script>
+  // Fade in on page load
+  document.body.classList.add('fade-in');
+
+  // Handle link clicks with fade-out
+  document.querySelectorAll('a[href]').forEach(link => {
+    const url = link.getAttribute('href');
+    if (!url.startsWith('#') && !url.startsWith('mailto:') && !url.startsWith('http')) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.classList.remove('fade-in');
+        document.body.classList.add('fade-out');
+
+        setTimeout(() => {
+          window.location = url;
+        }, 400); // Match fadeOut duration
+      });
+    }
+  });
+</script>
+
+	
+</body>
+</html>
